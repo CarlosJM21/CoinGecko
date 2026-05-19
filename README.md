@@ -1,8 +1,9 @@
-# CoinGecko Data Platform - Microsoft Fabric End-to-End Solution
+# CoinGecko Full Carga- Microsoft Fabric End-to-End Solution
 
-Este repositorio contiene un ejercicio de Full Load de fabric que la arquitectura analítica y la solución de ingeniería de datos 
-*End-to-End* para la ingesta, procesamiento y visualización de métricas del mercado de criptomonedas, utilizando la API de 
-**CoinGecko** como origen de datos y **Microsoft Fabric** como plataforma centralizada bajo un esquema de carga completa (*FULL Load*).
+Este repositorio contiene un ejercicio de Full Load de fabric que la arquitectura analítica medallon para gnerar la solución 
+de ingeniería de datos *End-to-End* para la ingesta, procesamiento y visualización de métricas del mercado de criptomonedas, 
+utilizando la API de **CoinGecko** como origen de datos y **Microsoft Fabric** como plataforma centralizada bajo un esquema 
+de carga completa (*FULL Load*).
 
 ## 🛠️ Fundamentos Tecnológicos del Ecosistema
 
@@ -48,7 +49,7 @@ Estrategias avanzadas de integración de datos.
 El flujo se organiza de forma transversal utilizando los siguientes componentes nativos:
 *   **Datastores:** Repositorio único en **OneLake** configurado mediante **Lakehouses** y **Data Warehouses**.
 *   **Compute:** Ejecución optimizada utilizando motores **Spark** para transformación y **Warehouse Capacity** para consultas
-*   SQL analíticas.
+    SQL analíticas.
 *   **Orchestration:** Automatización de flujos continuos mediante Data Factory **Pipelines**.
 *   **Serving:** Exposición del modelo de datos listo para el consumo del negocio mediante **Power BI** y endpoints de consulta.
 
@@ -59,14 +60,14 @@ El flujo se organiza de forma transversal utilizando los siguientes componentes 
 El repositorio implementa un patrón de diseño lógico por fases para el refinamiento progresivo de la calidad de los datos analíticos:
 
 1.  **Capa Bronce (Ingesta):** Un proceso de **Pipeline** extrae la información del mercado cripto desde la Web App de CoinGecko.
-2.     Un componente **Copy Job** almacena los datos exactamente en su formato **JSON** original dentro de carpetas (`Folder`)
-3.     en el **Lakehouse**.
-4.  **Capa Plata (Curación):** Mediante un **Notebook de Spark**, los archivos JSON crudos se leen, limpian y estructuran. En esta
-5.    fase se realiza la remoción de registros duplicados, tipado de datos y estandarización completa, guardando el resultado en
-6.    **tablas en formato Delta**.
-7.  **Capa Oro (Modelo Semántico):** Utilizando código optimizado en un **Notebook con Apache Spark**, se toman las tablas Delta
-8.    curadas y se genera el modelo dimensional definitivo dentro del **Data Warehouse**, quedando disponible de forma inmediata
-9.    para construir el informe interactivo en **Power BI**.
+      Un componente **Copy Job** almacena los datos exactamente en su formato **JSON** original dentro de carpetas (`Folder`)
+      en el **Lakehouse**.
+2.  **Capa Plata (Curación):** Mediante un **Notebook de Spark**, los archivos JSON crudos se leen, limpian y estructuran. En esta
+      fase se realiza la remoción de registros duplicados, tipado de datos y estandarización completa, guardando el resultado en
+      **tablas en formato Delta**.
+3.  **Capa Oro (Modelo Semántico):** Utilizando código optimizado en un **Notebook con Apache Spark**, se toman las tablas Delta
+      curadas y se genera el modelo dimensional definitivo dentro del **Data Warehouse**, quedando disponible de forma inmediata
+      para construir el informe interactivo en **Power BI**.
 
 ### 👥 Roles Clave en el Proyecto
 *   **Arquitecto / Ingeniero de Datos:** Diseña y automatiza los pipelines de movimiento de datos (Capa Bronce a Plata).
@@ -119,5 +120,5 @@ El código del proyecto se organiza bajo la siguiente estructura modular:
    ```bash
    git clone https://github.com
    ```
-2. Importa los archivos de la carpeta `05-microsoft-fabric-solution/` dentro de tu entorno de Fabric.
+2. Importa los archivos de la carpeta `00-microsoft-fabric-solution/` dentro de tu entorno de Fabric.
 3. Ejecuta el pipeline de la capa `02-bronce-ingestion` para iniciar la carga completa (*FULL Load*) de los datos.
