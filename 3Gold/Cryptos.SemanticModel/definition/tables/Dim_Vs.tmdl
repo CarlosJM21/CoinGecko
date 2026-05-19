@@ -1,0 +1,34 @@
+table Dim_Vs
+	lineageTag: 66c853e7-73ae-4be8-b4a0-0bbb38d8481a
+	sourceLineageTag: [dbo].[Dim_Vs]
+
+	column vs_id
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 0b061b72-bce3-4966-8a0a-648afb2fb6f0
+		sourceLineageTag: vs_id
+		summarizeBy: none
+		sourceColumn: vs_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column moneda_vs
+		dataType: string
+		sourceProviderType: varchar(-1)
+		lineageTag: 1ad99c7b-d328-4318-884c-aaf92f645fb6
+		sourceLineageTag: moneda_vs
+		summarizeBy: none
+		sourceColumn: moneda_vs
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Vs = entity
+		mode: directLake
+		source
+			entityName: Dim_Vs
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+

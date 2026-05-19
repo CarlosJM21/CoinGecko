@@ -1,0 +1,186 @@
+table F_Hecho_Crypto_Diario
+	lineageTag: 9d2a956a-92eb-4e4f-a7df-4631b68e036e
+	sourceLineageTag: [dbo].[F_Hecho_Crypto_Diario]
+
+	column fecha_key
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 73597085-28e1-4ed1-a247-2db64056ac82
+		sourceLineageTag: fecha_key
+		summarizeBy: none
+		sourceColumn: fecha_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column moneda_id
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 286ab85b-97c5-431c-8b63-6d420901b63d
+		sourceLineageTag: moneda_id
+		summarizeBy: none
+		sourceColumn: moneda_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column vs_id
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 2368e22f-c23f-45c1-9c81-333c88d044a6
+		sourceLineageTag: vs_id
+		summarizeBy: none
+		sourceColumn: vs_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column precio_actual
+		dataType: double
+		sourceProviderType: float
+		lineageTag: 5690e78b-bd47-4582-8a95-f6fff25719d1
+		sourceLineageTag: precio_actual
+		summarizeBy: sum
+		sourceColumn: precio_actual
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column capitalizacion
+		dataType: double
+		sourceProviderType: float
+		lineageTag: 829dc9cd-5ced-49a7-bdab-e90b2b9ec50b
+		sourceLineageTag: capitalizacion
+		summarizeBy: sum
+		sourceColumn: capitalizacion
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column volumen_total
+		dataType: double
+		sourceProviderType: float
+		lineageTag: f61f0a67-614c-416e-8afb-70914b8590c8
+		sourceLineageTag: volumen_total
+		summarizeBy: sum
+		sourceColumn: volumen_total
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column variacion_pct_24h
+		dataType: double
+		sourceProviderType: float
+		lineageTag: deb9cb36-93c1-4961-94ac-bedc2c6d378d
+		sourceLineageTag: variacion_pct_24h
+		summarizeBy: sum
+		sourceColumn: variacion_pct_24h
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column maximo_24h
+		dataType: double
+		sourceProviderType: float
+		lineageTag: ca4660bd-f0d3-4991-b5cc-adc08b300ed9
+		sourceLineageTag: maximo_24h
+		summarizeBy: sum
+		sourceColumn: maximo_24h
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column minimo_24h
+		dataType: double
+		sourceProviderType: float
+		lineageTag: b6262670-2f94-445c-a36a-47d199a77db2
+		sourceLineageTag: minimo_24h
+		summarizeBy: sum
+		sourceColumn: minimo_24h
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column puesto_market_cap
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 0e87dc50-8b1a-4b12-8df3-be2715439616
+		sourceLineageTag: puesto_market_cap
+		summarizeBy: sum
+		sourceColumn: puesto_market_cap
+
+		annotation SummarizationSetBy = Automatic
+
+	column max_historico
+		dataType: double
+		sourceProviderType: float
+		lineageTag: b7bfcc29-efe7-421d-ab0b-85aef3f2b3cd
+		sourceLineageTag: max_historico
+		summarizeBy: sum
+		sourceColumn: max_historico
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column variacion_pct_ath
+		dataType: double
+		sourceProviderType: float
+		lineageTag: 6793a944-5507-4437-85db-d8562d370ad2
+		sourceLineageTag: variacion_pct_ath
+		summarizeBy: sum
+		sourceColumn: variacion_pct_ath
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column fecha_ath
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: date
+		lineageTag: 609c03cf-828a-4d1a-a723-190fa7353086
+		sourceLineageTag: fecha_ath
+		summarizeBy: none
+		sourceColumn: fecha_ath
+
+		annotation SummarizationSetBy = Automatic
+
+	column ultima_actualizacion
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: datetime2
+		lineageTag: 45a6ea48-bc76-44a8-bb83-34e5498065d4
+		sourceLineageTag: ultima_actualizacion
+		summarizeBy: none
+		sourceColumn: ultima_actualizacion
+
+		annotation SummarizationSetBy = Automatic
+
+	column ts_ingestion
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: datetime2
+		lineageTag: a3897b3a-084f-4a19-a34b-b6f6aae8d638
+		sourceLineageTag: ts_ingestion
+		summarizeBy: none
+		sourceColumn: ts_ingestion
+
+		annotation SummarizationSetBy = Automatic
+
+	partition F_Hecho_Crypto_Diario = entity
+		mode: directLake
+		source
+			entityName: F_Hecho_Crypto_Diario
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+

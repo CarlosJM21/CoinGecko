@@ -1,0 +1,524 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "17d36809-21e5-a4b3-4d75-12956887b02e",
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "parameters": {
+            "p_run_date": {
+              "value": {
+                "value": "@{formatDateTime(utcNow(),'yyyy-MM-dd')}",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "p_force_reingest": {
+              "value": "False",
+              "type": "string"
+            }
+          }
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "ValidarCarpeta",
+        "dependsOn": []
+      },
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "0ce0ba05-a6d5-9abb-4039-1b998231ee2a",
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "parameters": {
+            "message": {
+              "value": "Error: los datos que etsa intentando cargar ya existen.",
+              "type": "string"
+            },
+            "IdPipeline": {
+              "value": {
+                "value": "@pipeline().RunId",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "p_currency": {
+              "value": "\"\"",
+              "type": "string"
+            }
+          }
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "InsertarLogError",
+        "dependsOn": [
+          {
+            "activity": "ValidarCarpeta",
+            "dependencyConditions": [
+              "Failed"
+            ]
+          },
+          {
+            "activity": "ForEach1",
+            "dependencyConditions": [
+              "Failed"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "62828e13-4728-8f91-4c3b-4b75f32c2c4c",
+          "workspaceId": "00000000-0000-0000-0000-000000000000"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "ExtraerCorreo",
+        "dependsOn": [
+          {
+            "activity": "InsertarLogError",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "SetVariable",
+        "typeProperties": {
+          "variableName": "Correos",
+          "value": {
+            "value": "@activity('ExtraerCorreo').output.result.exitValue",
+            "type": "Expression"
+          }
+        },
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "CargarCorreosError",
+        "dependsOn": [
+          {
+            "activity": "ExtraerCorreo",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Office365Email",
+        "typeProperties": {
+          "body": "<p>Esta intentando volver a cargar datos ya existentes en el sistema&nbsp;</p>\n<p>@{pipeline().RunId}</p>",
+          "to": {
+            "value": "@variables('Correos')",
+            "type": "Expression"
+          },
+          "subject": "Notificacion Error Carga"
+        },
+        "externalReferences": {
+          "connection": "edc3bf77-f03a-415d-8274-0ee23c835dd9"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Office365Email1",
+        "dependsOn": [
+          {
+            "activity": "CargarCorreosError",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "ForEach",
+        "typeProperties": {
+          "isSequential": true,
+          "items": {
+            "value": "@pipeline().parameters.p_vs_currencies",
+            "type": "Expression"
+          },
+          "activities": [
+            {
+              "type": "Copy",
+              "typeProperties": {
+                "source": {
+                  "type": "JsonSource",
+                  "formatSettings": {
+                    "type": "JsonReadSettings"
+                  },
+                  "storeSettings": {
+                    "type": "HttpReadSettings",
+                    "requestMethod": "GET"
+                  },
+                  "datasetSettings": {
+                    "type": "Json",
+                    "typeProperties": {
+                      "location": {
+                        "type": "HttpServerLocation",
+                        "relativeUrl": {
+                          "value": "@concat('api/v3/coins/markets?vs_currency=',\n        item(), pipeline().parameters.p_common_query)",
+                          "type": "Expression"
+                        }
+                      }
+                    },
+                    "schema": {},
+                    "externalReferences": {
+                      "connection": "da5ccd56-6ee0-424c-8f13-37e010e3e012"
+                    },
+                    "annotations": []
+                  }
+                },
+                "sink": {
+                  "type": "JsonSink",
+                  "formatSettings": {
+                    "type": "JsonWriteSettings"
+                  },
+                  "storeSettings": {
+                    "type": "LakehouseWriteSettings"
+                  },
+                  "datasetSettings": {
+                    "type": "Json",
+                    "typeProperties": {
+                      "location": {
+                        "type": "LakehouseLocation",
+                        "folderPath": {
+                          "value": "/bronze/cryptos/@{formatDateTime(utcNow(),'yyyy-MM-dd')}",
+                          "type": "Expression"
+                        },
+                        "fileName": {
+                          "value": "@concat(item(),'_snapshot.json')",
+                          "type": "Expression"
+                        }
+                      }
+                    },
+                    "schema": {},
+                    "linkedService": {
+                      "name": "Lk_bronze",
+                      "properties": {
+                        "type": "Lakehouse",
+                        "typeProperties": {
+                          "artifactId": "0f66ec21-57fe-9599-4de5-6fac9956390f",
+                          "workspaceId": "00000000-0000-0000-0000-000000000000",
+                          "rootFolder": "Files"
+                        },
+                        "annotations": []
+                      }
+                    },
+                    "annotations": []
+                  }
+                },
+                "enableStaging": false
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "Copy data1",
+              "dependsOn": []
+            },
+            {
+              "type": "TridentNotebook",
+              "typeProperties": {
+                "notebookId": "0ce0ba05-a6d5-9abb-4039-1b998231ee2a",
+                "workspaceId": "00000000-0000-0000-0000-000000000000",
+                "parameters": {
+                  "Error": {
+                    "value": "Error: los datos que etsa intentando cargar ",
+                    "type": "string"
+                  },
+                  "IdPipeline": {
+                    "value": {
+                      "value": "@pipeline().RunId",
+                      "type": "Expression"
+                    },
+                    "type": "string"
+                  },
+                  "p_currency": {
+                    "value": {
+                      "value": "@item()",
+                      "type": "Expression"
+                    },
+                    "type": "string"
+                  }
+                }
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "LogError",
+              "dependsOn": [
+                {
+                  "activity": "Copy data1",
+                  "dependencyConditions": [
+                    "Failed"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "TridentNotebook",
+              "typeProperties": {
+                "notebookId": "62828e13-4728-8f91-4c3b-4b75f32c2c4c",
+                "workspaceId": "00000000-0000-0000-0000-000000000000"
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "ExtraerCorreosFor",
+              "dependsOn": [
+                {
+                  "activity": "LogError",
+                  "dependencyConditions": [
+                    "Succeeded"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "SetVariable",
+              "typeProperties": {
+                "variableName": "Correos",
+                "value": {
+                  "value": "@activity('ExtraerCorreosFor').output.result.exitValue",
+                  "type": "Expression"
+                }
+              },
+              "policy": {
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "CargarCorreos",
+              "dependsOn": [
+                {
+                  "activity": "ExtraerCorreosFor",
+                  "dependencyConditions": [
+                    "Succeeded"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "Office365Email",
+              "typeProperties": {
+                "body": "<p>Se genero un error en la carga de datos &nbsp;para @{item()} &nbsp;en el pipeline@{pipeline().RunId} el dia @{utcNow()}</p>",
+                "to": {
+                  "value": "@variables('Correos')",
+                  "type": "Expression"
+                },
+                "subject": "Error en la Copia de Datos"
+              },
+              "externalReferences": {
+                "connection": "edc3bf77-f03a-415d-8274-0ee23c835dd9"
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "Office365Email3",
+              "dependsOn": [
+                {
+                  "activity": "CargarCorreos",
+                  "dependencyConditions": [
+                    "Succeeded"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "name": "ForEach1",
+        "dependsOn": [
+          {
+            "activity": "ValidarCarpeta",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "0ce0ba05-a6d5-9abb-4039-1b998231ee2a",
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "parameters": {
+            "message": {
+              "value": "Exito el flujo de carga fue un exito.",
+              "type": "string"
+            },
+            "IdPipeline": {
+              "value": {
+                "value": "@pipeline().RunId",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "p_currency": {
+              "value": "\"\"",
+              "type": "string"
+            }
+          }
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "InsertarLogExito",
+        "dependsOn": [
+          {
+            "activity": "ForEach1",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "62828e13-4728-8f91-4c3b-4b75f32c2c4c",
+          "workspaceId": "00000000-0000-0000-0000-000000000000"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "ExtraerCorreoS",
+        "dependsOn": [
+          {
+            "activity": "InsertarLogExito",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "SetVariable",
+        "typeProperties": {
+          "variableName": "Correos",
+          "value": {
+            "value": "@activity('ExtraerCorreoS').output.result.exitValue",
+            "type": "Expression"
+          }
+        },
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "CargarCorreosExito",
+        "dependsOn": [
+          {
+            "activity": "ExtraerCorreoS",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Office365Email",
+        "typeProperties": {
+          "body": "<p>Se cargo la data exitosa del pipeline @{pipeline().RunId}</p>",
+          "to": {
+            "value": "@variables('Correos')",
+            "type": "Expression"
+          },
+          "subject": "Carga del dia Exitosa"
+        },
+        "externalReferences": {
+          "connection": "edc3bf77-f03a-415d-8274-0ee23c835dd9"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Office365Email2",
+        "dependsOn": [
+          {
+            "activity": "CargarCorreosExito",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      }
+    ],
+    "parameters": {
+      "p_force_reingest": {
+        "type": "bool",
+        "defaultValue": false
+      },
+      "p_run_date": {
+        "type": "string"
+      },
+      "p_vs_currencies": {
+        "type": "array",
+        "defaultValue": [
+          "usd",
+          "eur",
+          "btc"
+        ]
+      },
+      "p_base_url": {
+        "type": "string",
+        "defaultValue": "https://api.coingecko.com/"
+      },
+      "p_common_query": {
+        "type": "string",
+        "defaultValue": "&ids=bitcoin&names=Bitcoin&symbols=btc&category=layer-1&price_change_percentage=24h&order=market_cap_desc"
+      }
+    },
+    "variables": {
+      "Correos": {
+        "type": "String"
+      }
+    }
+  }
+}

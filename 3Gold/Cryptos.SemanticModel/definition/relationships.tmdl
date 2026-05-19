@@ -1,0 +1,12 @@
+relationship b5986323-a76d-8c3b-cf10-d5df7b9321eb
+	fromColumn: F_Hecho_Crypto_Diario.vs_id
+	toColumn: Dim_Vs.vs_id
+
+relationship e1fa754e-0fbd-0ec0-1d16-843dfdf20b10
+	fromColumn: F_Hecho_Crypto_Diario.moneda_id
+	toColumn: Dim_Moneda.moneda_id
+
+relationship 4643d2df-1190-0c68-ce56-c7f81a565704
+	fromColumn: Dim_Fecha.fecha_key
+	toColumn: F_Hecho_Crypto_Diario.fecha_key
+

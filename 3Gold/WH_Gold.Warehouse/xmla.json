@@ -1,0 +1,628 @@
+{
+  "name": "{{Dataset_Name}}",
+  "compatibilityLevel": 1604,
+  "model": {
+    "name": "{{Dataset_Name}}",
+    "culture": "en-US",
+    "collation": "Latin1_General_100_BIN2_UTF8",
+    "dataAccessOptions": {
+      "legacyRedirects": true,
+      "returnErrorValuesAsNull": true
+    },
+    "defaultPowerBIDataSourceVersion": "powerBI_V3",
+    "sourceQueryCulture": "en-US",
+    "tables": [
+      {
+        "name": "Dim_Fecha",
+        "sourceLineageTag": "[dbo].[Dim_Fecha]",
+        "columns": [
+          {
+            "name": "fecha",
+            "dataType": "dateTime",
+            "sourceColumn": "fecha",
+            "formatString": "General Date",
+            "sourceProviderType": "date",
+            "sourceLineageTag": "fecha",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "fecha_key",
+            "dataType": "int64",
+            "sourceColumn": "fecha_key",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "fecha_key",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "anio",
+            "dataType": "int64",
+            "sourceColumn": "anio",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "anio",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "mes",
+            "dataType": "int64",
+            "sourceColumn": "mes",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "mes",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "nombre_mes",
+            "dataType": "string",
+            "sourceColumn": "nombre_mes",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "nombre_mes",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "trimestre",
+            "dataType": "int64",
+            "sourceColumn": "trimestre",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "trimestre",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "semana_iso",
+            "dataType": "int64",
+            "sourceColumn": "semana_iso",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "semana_iso",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "dia_mes",
+            "dataType": "int64",
+            "sourceColumn": "dia_mes",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "dia_mes",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "dia_sem_iso",
+            "dataType": "int64",
+            "sourceColumn": "dia_sem_iso",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "dia_sem_iso",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "nombre_dia",
+            "dataType": "string",
+            "sourceColumn": "nombre_dia",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "nombre_dia",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "es_fin_semana",
+            "dataType": "boolean",
+            "sourceColumn": "es_fin_semana",
+            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\"",
+            "sourceProviderType": "bit",
+            "sourceLineageTag": "es_fin_semana",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "{{Partition_Name}}",
+            "mode": "directLake",
+            "source": {
+              "type": "entity",
+              "entityName": "Dim_Fecha",
+              "expressionSource": "DatabaseQuery",
+              "schemaName": "dbo"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "IsTableInBiModel",
+            "value": "False"
+          }
+        ]
+      },
+      {
+        "name": "Dim_Moneda",
+        "sourceLineageTag": "[dbo].[Dim_Moneda]",
+        "columns": [
+          {
+            "name": "moneda_id",
+            "dataType": "int64",
+            "sourceColumn": "moneda_id",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "moneda_id",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "id_moneda",
+            "dataType": "string",
+            "sourceColumn": "id_moneda",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "id_moneda",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "sigla",
+            "dataType": "string",
+            "sourceColumn": "sigla",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "sigla",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "nombre_moneda",
+            "dataType": "string",
+            "sourceColumn": "nombre_moneda",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "nombre_moneda",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "{{Partition_Name}}",
+            "mode": "directLake",
+            "source": {
+              "type": "entity",
+              "entityName": "Dim_Moneda",
+              "expressionSource": "DatabaseQuery",
+              "schemaName": "dbo"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "IsTableInBiModel",
+            "value": "False"
+          }
+        ]
+      },
+      {
+        "name": "Dim_Vs",
+        "sourceLineageTag": "[dbo].[Dim_Vs]",
+        "columns": [
+          {
+            "name": "vs_id",
+            "dataType": "int64",
+            "sourceColumn": "vs_id",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "vs_id",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "moneda_vs",
+            "dataType": "string",
+            "sourceColumn": "moneda_vs",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "moneda_vs",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "{{Partition_Name}}",
+            "mode": "directLake",
+            "source": {
+              "type": "entity",
+              "entityName": "Dim_Vs",
+              "expressionSource": "DatabaseQuery",
+              "schemaName": "dbo"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "IsTableInBiModel",
+            "value": "False"
+          }
+        ]
+      },
+      {
+        "name": "F_Hecho_Crypto_Diario",
+        "sourceLineageTag": "[dbo].[F_Hecho_Crypto_Diario]",
+        "columns": [
+          {
+            "name": "fecha_key",
+            "dataType": "int64",
+            "sourceColumn": "fecha_key",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "fecha_key",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "moneda_id",
+            "dataType": "int64",
+            "sourceColumn": "moneda_id",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "moneda_id",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "vs_id",
+            "dataType": "int64",
+            "sourceColumn": "vs_id",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "vs_id",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "precio_actual",
+            "dataType": "double",
+            "sourceColumn": "precio_actual",
+            "sourceProviderType": "float",
+            "sourceLineageTag": "precio_actual",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ]
+          },
+          {
+            "name": "capitalizacion",
+            "dataType": "double",
+            "sourceColumn": "capitalizacion",
+            "sourceProviderType": "float",
+            "sourceLineageTag": "capitalizacion",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ]
+          },
+          {
+            "name": "volumen_total",
+            "dataType": "double",
+            "sourceColumn": "volumen_total",
+            "sourceProviderType": "float",
+            "sourceLineageTag": "volumen_total",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ]
+          },
+          {
+            "name": "variacion_pct_24h",
+            "dataType": "double",
+            "sourceColumn": "variacion_pct_24h",
+            "sourceProviderType": "float",
+            "sourceLineageTag": "variacion_pct_24h",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ]
+          },
+          {
+            "name": "maximo_24h",
+            "dataType": "double",
+            "sourceColumn": "maximo_24h",
+            "sourceProviderType": "float",
+            "sourceLineageTag": "maximo_24h",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ]
+          },
+          {
+            "name": "minimo_24h",
+            "dataType": "double",
+            "sourceColumn": "minimo_24h",
+            "sourceProviderType": "float",
+            "sourceLineageTag": "minimo_24h",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ]
+          },
+          {
+            "name": "puesto_market_cap",
+            "dataType": "int64",
+            "sourceColumn": "puesto_market_cap",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "puesto_market_cap",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "max_historico",
+            "dataType": "double",
+            "sourceColumn": "max_historico",
+            "sourceProviderType": "float",
+            "sourceLineageTag": "max_historico",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ]
+          },
+          {
+            "name": "variacion_pct_ath",
+            "dataType": "double",
+            "sourceColumn": "variacion_pct_ath",
+            "sourceProviderType": "float",
+            "sourceLineageTag": "variacion_pct_ath",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ]
+          },
+          {
+            "name": "fecha_ath",
+            "dataType": "dateTime",
+            "sourceColumn": "fecha_ath",
+            "formatString": "General Date",
+            "sourceProviderType": "date",
+            "sourceLineageTag": "fecha_ath",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "ultima_actualizacion",
+            "dataType": "dateTime",
+            "sourceColumn": "ultima_actualizacion",
+            "formatString": "General Date",
+            "sourceProviderType": "datetime2",
+            "sourceLineageTag": "ultima_actualizacion",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "ts_ingestion",
+            "dataType": "dateTime",
+            "sourceColumn": "ts_ingestion",
+            "formatString": "General Date",
+            "sourceProviderType": "datetime2",
+            "sourceLineageTag": "ts_ingestion",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "{{Partition_Name}}",
+            "mode": "directLake",
+            "source": {
+              "type": "entity",
+              "entityName": "F_Hecho_Crypto_Diario",
+              "expressionSource": "DatabaseQuery",
+              "schemaName": "dbo"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "IsTableInBiModel",
+            "value": "False"
+          }
+        ]
+      }
+    ],
+    "expressions": [
+      {
+        "name": "DatabaseQuery",
+        "kind": "m",
+        "expression": "let\n    database = {{TDS_Endpoint}}\nin\n    database\n"
+      }
+    ],
+    "annotations": [
+      {
+        "name": "__PBI_TimeIntelligenceEnabled",
+        "value": "0"
+      },
+      {
+        "name": "SourceLineageTagType",
+        "value": "DatabaseFullyQualifiedName"
+      }
+    ]
+  }
+}

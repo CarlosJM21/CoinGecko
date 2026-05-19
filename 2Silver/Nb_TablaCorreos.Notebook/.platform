@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "Nb_TablaCorreos"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "603d7de6-6fd0-837a-4548-2be774d8ef0f"
+  }
+}

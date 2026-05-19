@@ -1,0 +1,54 @@
+table Dim_Moneda
+	lineageTag: fe954baa-8ac6-40f2-8c31-16b8e39d419c
+	sourceLineageTag: [dbo].[Dim_Moneda]
+
+	column moneda_id
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: ca76c7dc-da4d-4892-8751-9ba6363d0d95
+		sourceLineageTag: moneda_id
+		summarizeBy: none
+		sourceColumn: moneda_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column id_moneda
+		dataType: string
+		sourceProviderType: varchar(-1)
+		lineageTag: 62df5575-9f19-4930-8905-076cf09d962e
+		sourceLineageTag: id_moneda
+		summarizeBy: none
+		sourceColumn: id_moneda
+
+		annotation SummarizationSetBy = Automatic
+
+	column sigla
+		dataType: string
+		sourceProviderType: varchar(-1)
+		lineageTag: e2dbd891-a8f8-4452-9a0d-488a0f175c84
+		sourceLineageTag: sigla
+		summarizeBy: none
+		sourceColumn: sigla
+
+		annotation SummarizationSetBy = Automatic
+
+	column nombre_moneda
+		dataType: string
+		sourceProviderType: varchar(-1)
+		lineageTag: 0ec9bcca-575e-4cd4-95b7-b2beae487b85
+		sourceLineageTag: nombre_moneda
+		summarizeBy: none
+		sourceColumn: nombre_moneda
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Moneda = entity
+		mode: directLake
+		source
+			entityName: Dim_Moneda
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+
