@@ -72,9 +72,8 @@ El repositorio implementa un patrón de diseño lógico por fases para el refina
 ### 👥 Roles Clave en el Proyecto
 *   **Arquitecto / Ingeniero de Datos:** Diseña y automatiza los pipelines de movimiento de datos (Capa Bronce a Plata).
 *   **Científico de Datos / Ingeniero ML:** Explota las tablas limpias de la capa plata para crear análisis predictivos del mercado
-*     (*"¿Qué pasará con el precio?"*).
 *   **Desarrollador BI / Analista de Negocio:** Diseña el modelo en estrella de la capa oro y genera cuadros de mando para responder
-*     preguntas clave (*"¿Cuánto varió el volumen?", "¿Por qué bajó la capitalización?"*).
+     preguntas clave (*"¿Cuánto varió el volumen?", "¿Por qué bajó la capitalización?"*).
 
 ---
 
@@ -83,8 +82,8 @@ El repositorio implementa un patrón de diseño lógico por fases para el refina
 Para analizar el comportamiento diario del mercado, la capa Oro expone un diseño relacional optimizado para lecturas de alta velocidad:
 
 *   **Tabla de Hechos (`F_Hecho_Crypto_Diario`):** Almacena las métricas numéricas y cuantitativas del negocio: capitalización de mercado,
-*      precio actual, máximos/mínimos de las últimas 24 horas, variaciones porcentuales, volumen total diario y marcas de tiempo de
-*       ingesta (`ts_ingestion`).
+       precio actual, máximos/mínimos de las últimas 24 horas, variaciones porcentuales, volumen total diario y marcas de tiempo de
+       ingesta (`ts_ingestion`).
 *   **Tablas de Dimensiones (Relaciones 1:N):**
     *   **`Dim_Fecha`:** Desglose del tiempo (año, mes, día del mes, día de la semana ISO, indicador de fin de semana).
     *   **`Dim_Moneda`:** Datos descriptivos del activo (id de la moneda, nombre completo y sigla/ticker).
